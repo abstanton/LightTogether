@@ -1,13 +1,11 @@
-# import RPi.GPIO as GPIO
 import socket
 import sys
 import RPi.GPIO as gpio
 import components
-
+import keyboard
 
 ip_address = str(sys.argv[1])
 button_pin = int(sys.argv[2])
-
 
 gpio.setmode(gpio.BOARD)
 
@@ -18,6 +16,9 @@ server_address = (ip_address, 10000)
 sock.connect(server_address)
 
 while(True):
+    if keyboard.is_pressed('q'):
+        sock.close()
+        exit()
     try:
         pressed = button.getNext()
         data = 1 if pressed else 0
