@@ -64,9 +64,18 @@ class Stepper:
 
 class Button:
     def __init__(self, pin):
+        self.pressed = False
         self.pin = pin
         gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
         
-    def pressed(self):
+    def isPressed(self):
         return gpio.input(self.pin) == gpio.HIGH
-        
+
+    def getNext(self):
+        while(True):
+            pressedCurr = self.isPressed()
+            if self.pressed == pressedCurr:
+                continue
+            else:
+                self.pressed = pressedCurr
+                return self.pressed
