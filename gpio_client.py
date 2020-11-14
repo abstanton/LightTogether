@@ -4,12 +4,17 @@ import sys
 import RPi.GPIO as gpio
 import components
 
+
+ip_address = str(sys.argv[1])
+button_pin = int(sys.argv[2])
+
+
 gpio.setmode(gpio.BOARD)
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-button = components.Button(10)
+button = components.Button(button_pin)
 
-server_address = ('localhost', 10000)
+server_address = (ip_address, 10000)
 sock.connect(server_address)
 
 while(True):
